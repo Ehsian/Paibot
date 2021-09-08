@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Main extends ListenerAdapter {
@@ -55,7 +56,13 @@ public class Main extends ListenerAdapter {
             switch (args[0].substring(Main.prefix.length()).toLowerCase()) {
                 case "help", "info", "commands" -> Help.main(args, event);
                 case "ping", "latency" -> Ping.main(event);
-                case "wish", "pull" -> Pull.main(event, args);
+                case "wish", "pull" -> Wish.main(event, args);
+                case "history" -> {
+                    String[]newargs = new String[args.length+1];
+                    System.arraycopy(args,0,newargs,1,args.length);
+                    newargs[1]="history";
+                    Wish.main(event,newargs);
+                }
                 case "save" -> {
                     try {
                         SaveData.saveData();

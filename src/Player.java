@@ -12,9 +12,9 @@ public class Player implements Serializable {
     int limitedPity = 0;
     int limitedPity4Star = 0;
     boolean fiftyfifty = true;
-    ArrayList<String>history = new ArrayList<>();
-    ArrayList<String>limitedHistory = new ArrayList<>();
-    ArrayList<String>standardHistory = new ArrayList<>();
+    ArrayList<Pull>history = new ArrayList<>();
+    ArrayList<Pull>limitedHistory = new ArrayList<>();
+    ArrayList<Pull>standardHistory = new ArrayList<>();
     HashMap<String,Integer>inventory = new HashMap<>();
 
     public Player(String userID){
