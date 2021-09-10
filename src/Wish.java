@@ -148,10 +148,22 @@ public class Wish extends ListenerAdapter {
             switch (args[1].toLowerCase()) {
                 case "standard" -> {
                     if(args.length>2&&args[2].equals("10")){
+                        boolean containsFiveStar = false;
                         embed.setTitle("Standard Wish (x10) Results:");
                         for(int i=0;i<10;i++){
-                            
+                            String Wish = permanentBannerWish();
+                            addToInventory(Wish,"standard");
+                            embed.addField("Pull #"+(i+1)+":",getNumStars(Wish)+" "+player.standardHistory.get(0).type+" - "+Wish,false);
+                            if(getNumStars(Wish).equals(":star::star::star::star::star:")){
+                                containsFiveStar = true;
+                            }
                         }
+                        if(containsFiveStar){
+                            embed.setColor(new Color(255,215,0));
+                        }else{
+                            embed.setColor(new Color(190, 10, 255));
+                        }
+                        break;
                     }
                     String Wish = permanentBannerWish();
                     addToInventory(Wish,"standard");
@@ -165,6 +177,24 @@ public class Wish extends ListenerAdapter {
                     } catch (Exception ignored) {}
                 }
                 case "limited", "event" -> {
+                    if(args.length>2&&args[2].equals("10")){
+                        boolean containsFiveStar = false;
+                        embed.setTitle("Character Event Wish (x10) Results:");
+                        for(int i=0;i<10;i++){
+                            String Wish = limitedBannerWish();
+                            addToInventory(Wish,"event");
+                            embed.addField("Pull #"+(i+1)+":",getNumStars(Wish)+" "+player.limitedHistory.get(0).type+" - "+Wish,false);
+                            if(getNumStars(Wish).equals(":star::star::star::star::star:")){
+                                containsFiveStar = true;
+                            }
+                        }
+                        if(containsFiveStar){
+                            embed.setColor(new Color(255,215,0));
+                        }else{
+                            embed.setColor(new Color(190, 10, 255));
+                        }
+                        break;
+                    }
                     String Wish = limitedBannerWish();
                     addToInventory(Wish,"event");
                     embed.setTitle("Character Event Wish Results:");
