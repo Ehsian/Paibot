@@ -21,13 +21,14 @@ public class Main extends ListenerAdapter {
     public static ArrayList<User> allUsers = new ArrayList<>();
     public static ArrayList<Player> allPlayers = new ArrayList<>();
 
-    public static void main(String[] args) throws LoginException,IOException,ClassNotFoundException {
+    public static void main(String[] args) throws LoginException, IOException, ClassNotFoundException, InterruptedException {
         //-------------------------------------------------- Initialize Bot
         BufferedReader br = new BufferedReader(new FileReader("ignore/token.txt"));
-        jda = JDABuilder.createDefault(br.readLine()).build();
+        jda = JDABuilder.createDefault(br.readLine()).build().awaitReady();
         br.close();
 
         SaveData.loadData();
+        Quiz.run();
 
         //-------------------------------------------------- Set Status
         jda.getPresence().setActivity(Activity.watching(String.format("for commands | %shelp",prefix)));
@@ -56,6 +57,15 @@ public class Main extends ListenerAdapter {
             switch (args[0].substring(Main.prefix.length()).toLowerCase()) {
                 case "help", "info", "commands" -> Help.main(args, event);
                 case "ping", "latency" -> Ping.main(event);
+                case "daily" -> {
+                    if(!Tools.getPlayer(event.getAuthor()).daily){
+                        Tools.getPlayer(event.getAuthor()).primogems+=160;
+                        Tools.getPlayer(event.getAuthor()).daily = true;
+                        event.getChannel().sendMessage("Obtained your daily reward of 160 primogems.").queue();
+                    } else{
+                        event.getChannel().sendMessage("You have already claimed this reward today. Please try again tomorrow.").queue();
+                    }
+                }
                 case "wish", "pull" -> Wish.main(event, args);
                 case "history" -> {
                     String[]newargs = new String[args.length+1];

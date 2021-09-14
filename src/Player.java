@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class Player implements Serializable {
     String userID;
+    boolean daily = false; //false = uncollected, true = collected
     int primogems = 1000;
     int starglitter = 0;
     int stardust = 0;
