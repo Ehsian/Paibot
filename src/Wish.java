@@ -153,6 +153,9 @@ public class Wish extends ListenerAdapter {
                         for(int i=0;i<10;i++){
                             String Wish = permanentBannerWish();
                             addToInventory(Wish,"standard");
+                            try {
+                                SaveData.saveData(player);
+                            } catch (Exception ignored) {}
                             embed.addField("Pull #"+(i+1)+":",getNumStars(Wish)+" "+player.standardHistory.get(0).type+" - "+Wish,false);
                             if(getNumStars(Wish).equals(":star::star::star::star::star:")){
                                 containsFiveStar = true;
@@ -183,6 +186,9 @@ public class Wish extends ListenerAdapter {
                         for(int i=0;i<10;i++){
                             String Wish = limitedBannerWish();
                             addToInventory(Wish,"event");
+                            try {
+                                SaveData.saveData(player);
+                            } catch (Exception ignored) {}
                             embed.addField("Pull #"+(i+1)+":",getNumStars(Wish)+" "+player.limitedHistory.get(0).type+" - "+Wish,false);
                             if(getNumStars(Wish).equals(":star::star::star::star::star:")){
                                 containsFiveStar = true;

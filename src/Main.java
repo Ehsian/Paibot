@@ -28,15 +28,20 @@ public class Main extends ListenerAdapter {
         br.close();
 
         SaveData.loadData();
-        Quiz.run();
 
         //-------------------------------------------------- Set Status
         jda.getPresence().setActivity(Activity.watching(String.format("for commands | %shelp",prefix)));
         jda.addEventListener(new Main());
+        jda.addEventListener(new Quiz());
+        Quiz.run();
     }
 
     //------------------------------------------------------ Command Listener
     public void onGuildMessageReceived(GuildMessageReceivedEvent event){
+        if(!allUsers.contains(event.getAuthor())){
+            allUsers.add(event.getAuthor());
+            allPlayers.add(new Player(event.getAuthor().getId()));
+        }
         String[] args = event.getMessage().getContentRaw().split(" ");
         if(args[0].length()>Main.prefix.length()&&args[0].substring(0,Main.prefix.length()).equalsIgnoreCase(Main.prefix)){
             if(!allUsers.contains(event.getAuthor())){
@@ -61,6 +66,9 @@ public class Main extends ListenerAdapter {
                     if(!Tools.getPlayer(event.getAuthor()).daily){
                         Tools.getPlayer(event.getAuthor()).primogems+=160;
                         Tools.getPlayer(event.getAuthor()).daily = true;
+                        try {
+                            SaveData.saveData(Tools.getPlayer(event.getAuthor()));
+                        } catch (Exception ignored) {}
                         event.getChannel().sendMessage("Obtained your daily reward of 160 primogems.").queue();
                     } else{
                         event.getChannel().sendMessage("You have already claimed this reward today. Please try again tomorrow.").queue();
