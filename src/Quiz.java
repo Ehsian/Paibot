@@ -35,7 +35,7 @@ public class Quiz extends ListenerAdapter {
         //        new String[]{"","","",""},""));
     }
     static boolean answerable;
-    static TextChannel textChannel = Main.jda.getTextChannelById("746051202248081489");
+    static TextChannel textChannel = Main.jda.getTextChannelById("889374039573946408");
     static Question question;
     static boolean first;
     static ArrayList<Player>answered = new ArrayList<>();
@@ -48,7 +48,7 @@ public class Quiz extends ListenerAdapter {
     };*/
     public static void run() {
         Runnable quiz = () -> {
-            final long interval = 20000; //Run every 20 seconds
+            final long interval = 45000; //Run every 20 seconds
             while(true){
                 if(Math.random()*10<2){
                     assert textChannel != null;
@@ -110,6 +110,11 @@ public class Quiz extends ListenerAdapter {
         }
         if(event.getChannel().equals(textChannel)){
             if(System.currentTimeMillis()-player.time<5000){
+                for(String choice:question.choices){
+                    if(event.getMessage().getContentRaw().equalsIgnoreCase(choice)){
+                        event.getChannel().sendMessage("You can not answer again for 5 seconds after answering incorrectly.").queue();
+                    }
+                }
                 return;
             }
             if(answerable){
@@ -130,7 +135,11 @@ public class Quiz extends ListenerAdapter {
                     }
                 }
                 else{
-                    player.time = System.currentTimeMillis();
+                    for(String choice:question.choices){
+                        if(event.getMessage().getContentRaw().equalsIgnoreCase(choice)){
+                            player.time = System.currentTimeMillis();
+                        }
+                    }
                 }
             }
         }
