@@ -55,8 +55,8 @@ public class Wish extends ListenerAdapter {
             "Skyward Pride","Skyward Blade","Amos' Bow","Lost Prayer to the Sacred Winds",
             "Primoridal Jade Winged-Spear","Wolf's Gravestone","Aquila Favonia"};
 
-    static String rateUpFiveStar = "Raiden Shogun";
-    static String[]rateUpFourStars = {"Kujou Sara","Xiangling","Sucrose"};
+    static String rateUpFiveStar = "Sangonomiya Kokomi";
+    static String[]rateUpFourStars = {"Xingqiu","Beidou","Rosaria"};
 
     static HashMap<String,String>images = new HashMap<>();
     static{
@@ -90,6 +90,7 @@ public class Wish extends ListenerAdapter {
         images.put("Xiao","https://static.wikia.nocookie.net/gensin-impact/images/8/88/Character_Xiao_Card.jpg/revision/latest?cb=20200331193542");
         images.put("Hu Tao","https://static.wikia.nocookie.net/gensin-impact/images/2/22/Character_Hu_Tao_Card.jpg/revision/latest/scale-to-width-down/281?cb=20210227051236");
         images.put("Raiden Shogun","https://static.wikia.nocookie.net/gensin-impact/images/9/97/Character_Raiden_Shogun_Card.png/revision/latest?cb=20210722101216");
+        images.put("Sangonomiya Kokomi","https://static.wikia.nocookie.net/gensin-impact/images/3/32/Character_Sangonomiya_Kokomi_Card.jpg/revision/latest/scale-to-width-down/1000?cb=20210722100135");
 
         images.put("Skyward Harp","https://static.wikia.nocookie.net/gensin-impact/images/1/19/Weapon_Skyward_Harp.png/revision/latest/scale-to-width-down/256?cb=20201116035246");
         images.put("Amos' Bow","https://static.wikia.nocookie.net/gensin-impact/images/d/de/Weapon_Amos%27_Bow.png/revision/latest/scale-to-width-down/256?cb=20201120010513");
@@ -148,6 +149,10 @@ public class Wish extends ListenerAdapter {
             switch (args[1].toLowerCase()) {
                 case "standard" -> {
                     if(args.length>2&&args[2].equals("10")){
+                        if(player.acquaintfate<10){
+                            event.getChannel().sendMessage("You do not have enough Acquaint Fates! Purchase more at )shop.").queue();
+                            return;
+                        }
                         boolean containsFiveStar = false;
                         embed.setTitle("Standard Wish (x10) Results:");
                         for(int i=0;i<10;i++){
@@ -168,6 +173,10 @@ public class Wish extends ListenerAdapter {
                         }
                         break;
                     }
+                    if(player.acquaintfate<1){
+                        event.getChannel().sendMessage("You do not have enough Acquaint Fates! Purchase more at )shop.").queue();
+                        return;
+                    }
                     String Wish = permanentBannerWish();
                     addToInventory(Wish,"standard");
                     embed.setTitle("Standard Wish Results:");
@@ -181,6 +190,10 @@ public class Wish extends ListenerAdapter {
                 }
                 case "limited", "event" -> {
                     if(args.length>2&&args[2].equals("10")){
+                        if(player.intertwinedfate<10){
+                            event.getChannel().sendMessage("You do not have enough Intertwined Fates! Purchase more at )shop.").queue();
+                            return;
+                        }
                         boolean containsFiveStar = false;
                         embed.setTitle("Character Event Wish (x10) Results:");
                         for(int i=0;i<10;i++){
@@ -200,6 +213,10 @@ public class Wish extends ListenerAdapter {
                             embed.setColor(new Color(190, 10, 255));
                         }
                         break;
+                    }
+                    if(player.intertwinedfate<1){
+                        event.getChannel().sendMessage("You do not have enough Intertwined Fates! Purchase more at )shop.").queue();
+                        return;
                     }
                     String Wish = limitedBannerWish();
                     addToInventory(Wish,"event");
@@ -301,19 +318,40 @@ public class Wish extends ListenerAdapter {
             player.standardPity4star = 0;
             boolean character = rand.nextBoolean();
             if(character){
-                return fiveStarCharacters[rand.nextInt(fiveStarCharacters.length)];
+                String item = fiveStarCharacters[rand.nextInt(fiveStarCharacters.length)];
+                if(player.inventory.containsKey(item)){
+                    if(player.inventory.get(item)<=7){ //c0 - c6 (7 Total copies)
+                        player.starglitter+=10;
+                    }
+                    else{
+                        player.starglitter+=25;
+                    }
+                }
+                return item;
             }
+            player.starglitter+=10;
             return fiveStarWeapons[rand.nextInt(fiveStarWeapons.length)];
         }else if(rng<rate4star){
             player.standardPity4star = 0;
             boolean character = rand.nextBoolean();
             if(character){
-                return fourStarCharacters[rand.nextInt(fourStarCharacters.length)];
+                String item = fourStarCharacters[rand.nextInt(fourStarCharacters.length)];
+                if(player.inventory.containsKey(item)){
+                    if(player.inventory.get(item)<=7){ //c0 - c6 (7 Total copies)
+                        player.starglitter+=2;
+                    }
+                    else{
+                        player.starglitter+=5;
+                    }
+                }
+                return item;
             }
+            player.starglitter+=2;
             return fourStarWeapons[rand.nextInt(fourStarWeapons.length)];
         }else{
             player.standardPity++;
             player.standardPity4star++;
+            player.stardust+=15;
             return threeStars[rand.nextInt(threeStars.length)];
         }
     }
@@ -342,15 +380,42 @@ public class Wish extends ListenerAdapter {
             if(player.fiftyfifty){
                 if(!rand.nextBoolean()){
                     player.fiftyfifty = false;
-                    return fiveStarCharacters[rand.nextInt(fiveStarCharacters.length)];
+                    String item = fiveStarCharacters[rand.nextInt(fiveStarCharacters.length)];
+                    if(player.inventory.containsKey(item)){
+                        if(player.inventory.get(item)<=7){ //c0 - c6 (7 Total copies)
+                            player.starglitter+=10;
+                        }
+                        else{
+                            player.starglitter+=25;
+                        }
+                    }
+                    return item;
                 }
             }
             player.fiftyfifty = true;
+            if(player.inventory.containsKey(rateUpFiveStar)){
+                if(player.inventory.get(rateUpFiveStar)<=7){ //c0 - c6 (7 Total copies)
+                    player.starglitter+=10;
+                }
+                else{
+                    player.starglitter+=25;
+                }
+            }
             return rateUpFiveStar;
-        }else if(rng<rate4star){
+        }
+        else if(rng<rate4star){
             player.limitedPity4Star = 0;
             if(rand.nextInt()<0.75){
-                return rateUpFourStars[rand.nextInt(rateUpFourStars.length)];
+                String item = rateUpFourStars[rand.nextInt(rateUpFourStars.length)];
+                if(player.inventory.containsKey(item)){
+                    if(player.inventory.get(item)<=7){ //c0 - c6 (7 Total copies)
+                        player.starglitter+=2;
+                    }
+                    else{
+                        player.starglitter+=5;
+                    }
+                }
+                return item;
             }
             boolean character = rand.nextBoolean();
             if(character){
@@ -358,12 +423,22 @@ public class Wish extends ListenerAdapter {
                 while(Arrays.asList(rateUpFourStars).contains(fourStar)){
                     fourStar = fourStarCharacters[rand.nextInt(fourStarCharacters.length)];
                 }
-                return fourStarCharacters[rand.nextInt(fourStarCharacters.length)];
+                String item = fourStarCharacters[rand.nextInt(fourStarCharacters.length)];
+                if(player.inventory.containsKey(item)){
+                    if(player.inventory.get(item)<=7){ //c0 - c6 (7 Total copies)
+                        player.starglitter+=2;
+                    }
+                    else{
+                        player.starglitter+=5;
+                    }
+                }
+                return item;
             }
             return fourStarWeapons[rand.nextInt(fourStarWeapons.length)];
         }else{
             player.limitedPity++;
             player.limitedPity4Star++;
+            player.stardust+=15;
             return threeStars[rand.nextInt(threeStars.length)];
         }
     }
