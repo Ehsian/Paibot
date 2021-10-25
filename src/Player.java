@@ -7,7 +7,7 @@ public class Player implements Serializable {
     boolean daily = false; //false = uncollected, true = collected
     long time; //Last time a wrong answer was inputted (Quiz)
     int primogems = 1000;
-    int acquaintfate = 1000000000;
+    int acquaintfate = 10;
     int intertwinedfate = 1000000000;
     int starglitter = 0;
     int stardust = 0;

@@ -1,12 +1,8 @@
-import com.iwebpp.crypto.TweetNaclFast;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
-import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
@@ -53,9 +49,9 @@ public class Wish extends ListenerAdapter {
     static String[]fiveStarCharacters = {"Jean", "Diluc", "Mona", "Qiqi", "Keqing"};
     static String[]fiveStarWeapons = {"Skyward Spine","Skyward Harp","Skyward Atlas",
             "Skyward Pride","Skyward Blade","Amos' Bow","Lost Prayer to the Sacred Winds",
-            "Primoridal Jade Winged-Spear","Wolf's Gravestone","Aquila Favonia"};
+            "Primordial Jade Winged-Spear","Wolf's Gravestone","Aquila Favonia"};
 
-    static String rateUpFiveStar = "Sangonomiya Kokomi";
+    static String rateUpFiveStar = "Hu Tao";
     static String[]rateUpFourStars = {"Xingqiu","Beidou","Rosaria"};
 
     static HashMap<String,String>images = new HashMap<>();
@@ -79,6 +75,7 @@ public class Wish extends ListenerAdapter {
         images.put("Rosaria","https://static.wikia.nocookie.net/gensin-impact/images/6/6d/Character_Rosaria_Card.png/revision/latest/scale-to-width-down/281?cb=20210330063015");
         images.put("Yanfei","https://static.wikia.nocookie.net/gensin-impact/images/f/f3/Character_Yanfei_Card.png/revision/latest/scale-to-width-down/281?cb=20210422100113");
         images.put("Kujou Sara","https://static.wikia.nocookie.net/gensin-impact/images/7/70/Character_Kujou_Sara_Card.jpg/revision/latest?cb=20210722100723");
+        images.put("Thoma","https://static.wikia.nocookie.net/gensin-impact/images/2/29/Character_Thoma_Card.jpg/revision/latest/scale-to-width-down/1000?cb=20210830125722");
 
         images.put("Jean","https://static.wikia.nocookie.net/gensin-impact/images/0/0e/Character_Jean_Card.jpg/revision/latest/scale-to-width-down/281?cb=20210706133041");
         images.put("Diluc","https://static.wikia.nocookie.net/gensin-impact/images/4/45/Character_Diluc_Card.jpg/revision/latest/scale-to-width-down/281?cb=20210529160947");
@@ -106,6 +103,7 @@ public class Wish extends ListenerAdapter {
         images.put("Sacrificial Bow","https://static.wikia.nocookie.net/gensin-impact/images/e/ec/Weapon_Sacrificial_Bow.png/revision/latest/scale-to-width-down/256?cb=20201120002607");
         images.put("The Stringless","https://static.wikia.nocookie.net/gensin-impact/images/7/71/Weapon_The_Stringless.png/revision/latest/scale-to-width-down/256?cb=20201116035406");
         images.put("Rust","https://static.wikia.nocookie.net/gensin-impact/images/1/1c/Weapon_Rust.png/revision/latest/scale-to-width-down/256?cb=20201120002437");
+        images.put("Alley Hunter","https://static.wikia.nocookie.net/gensin-impact/images/0/0a/Weapon_Alley_Hunter.png/revision/latest/scale-to-width-down/256?cb=20210413212830");
         images.put("Favonius Codex","https://static.wikia.nocookie.net/gensin-impact/images/3/36/Weapon_Favonius_Codex.png/revision/latest/scale-to-width-down/256?cb=20201116033719");
         images.put("Sacrificial Fragments","https://static.wikia.nocookie.net/gensin-impact/images/6/6c/Weapon_Sacrificial_Fragments.png/revision/latest/scale-to-width-down/256?cb=20201116035037");
         images.put("The Widsith","https://static.wikia.nocookie.net/gensin-impact/images/f/f0/Weapon_The_Widsith.png/revision/latest/scale-to-width-down/256?cb=20201119201814");
@@ -120,6 +118,7 @@ public class Wish extends ListenerAdapter {
         images.put("Sacrificial Sword","https://static.wikia.nocookie.net/gensin-impact/images/a/a0/Weapon_Sacrificial_Sword.png/revision/latest/scale-to-width-down/256?cb=20201120010840");
         images.put("The Flute","https://static.wikia.nocookie.net/gensin-impact/images/6/63/Weapon_The_Flute.png/revision/latest/scale-to-width-down/256?cb=20201119203316");
         images.put("Lion's Roar","https://static.wikia.nocookie.net/gensin-impact/images/e/e6/Weapon_Lion%27s_Roar.png/revision/latest/scale-to-width-down/256?cb=20201119232745");
+        images.put("The Alley Flash","https://static.wikia.nocookie.net/gensin-impact/images/8/83/Weapon_The_Alley_Flash.png/revision/latest/scale-to-width-down/256?cb=20210317151138");
         images.put("Slingshot","https://static.wikia.nocookie.net/gensin-impact/images/c/ca/Weapon_Slingshot.png/revision/latest/scale-to-width-down/256?cb=20201116035308");
         images.put("Sharpshooter's Oath","https://static.wikia.nocookie.net/gensin-impact/images/5/52/Weapon_Sharpshooter%27s_Oath.png/revision/latest/scale-to-width-down/256?cb=20201116035135");
         images.put("Raven Bow","https://static.wikia.nocookie.net/gensin-impact/images/d/d0/Weapon_Raven_Bow.png/revision/latest/scale-to-width-down/256?cb=20201116034840");
@@ -156,6 +155,7 @@ public class Wish extends ListenerAdapter {
                         boolean containsFiveStar = false;
                         embed.setTitle("Standard Wish (x10) Results:");
                         for(int i=0;i<10;i++){
+                            player.acquaintfate--;
                             String Wish = permanentBannerWish();
                             addToInventory(Wish,"standard");
                             try {
@@ -177,6 +177,7 @@ public class Wish extends ListenerAdapter {
                         event.getChannel().sendMessage("You do not have enough Acquaint Fates! Purchase more at )shop.").queue();
                         return;
                     }
+                    player.acquaintfate--;
                     String Wish = permanentBannerWish();
                     addToInventory(Wish,"standard");
                     embed.setTitle("Standard Wish Results:");
@@ -197,6 +198,7 @@ public class Wish extends ListenerAdapter {
                         boolean containsFiveStar = false;
                         embed.setTitle("Character Event Wish (x10) Results:");
                         for(int i=0;i<10;i++){
+                            player.intertwinedfate--;
                             String Wish = limitedBannerWish();
                             addToInventory(Wish,"event");
                             try {
@@ -218,6 +220,7 @@ public class Wish extends ListenerAdapter {
                         event.getChannel().sendMessage("You do not have enough Intertwined Fates! Purchase more at )shop.").queue();
                         return;
                     }
+                    player.intertwinedfate--;
                     String Wish = limitedBannerWish();
                     addToInventory(Wish,"event");
                     embed.setTitle("Character Event Wish Results:");

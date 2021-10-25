@@ -81,6 +81,7 @@ public class Main extends ListenerAdapter {
                     newargs[1]="history";
                     Wish.main(event,newargs);
                 }
+                case "shop" -> Shop.main(event,args);
                 case "save" -> {
                     try {
                         SaveData.saveData();
