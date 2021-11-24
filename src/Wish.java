@@ -51,8 +51,8 @@ public class Wish extends ListenerAdapter {
             "Skyward Pride","Skyward Blade","Amos' Bow","Lost Prayer to the Sacred Winds",
             "Primordial Jade Winged-Spear","Wolf's Gravestone","Aquila Favonia"};
 
-    static String rateUpFiveStar = "Hu Tao";
-    static String[]rateUpFourStars = {"Xingqiu","Beidou","Rosaria"};
+    static String rateUpFiveStar = "Shenhe";
+    static String[]rateUpFourStars = {"Yun Jin","Bennett","Xingqiu"};
 
     static HashMap<String,String>images = new HashMap<>();
     static{
@@ -76,6 +76,9 @@ public class Wish extends ListenerAdapter {
         images.put("Yanfei","https://static.wikia.nocookie.net/gensin-impact/images/f/f3/Character_Yanfei_Card.png/revision/latest/scale-to-width-down/281?cb=20210422100113");
         images.put("Kujou Sara","https://static.wikia.nocookie.net/gensin-impact/images/7/70/Character_Kujou_Sara_Card.jpg/revision/latest?cb=20210722100723");
         images.put("Thoma","https://static.wikia.nocookie.net/gensin-impact/images/2/29/Character_Thoma_Card.jpg/revision/latest/scale-to-width-down/1000?cb=20210830125722");
+
+        //Replace when actual character comes out
+        images.put("Yun Jin","https://genshin.honeyhunterworld.com/img/char/yunjin_gacha_splash.png");
 
         images.put("Jean","https://static.wikia.nocookie.net/gensin-impact/images/0/0e/Character_Jean_Card.jpg/revision/latest/scale-to-width-down/281?cb=20210706133041");
         images.put("Diluc","https://static.wikia.nocookie.net/gensin-impact/images/4/45/Character_Diluc_Card.jpg/revision/latest/scale-to-width-down/281?cb=20210529160947");
@@ -132,6 +135,10 @@ public class Wish extends ListenerAdapter {
         images.put("Skyrider Sword","https://static.wikia.nocookie.net/gensin-impact/images/3/34/Weapon_Skyrider_Sword.png/revision/latest/scale-to-width-down/256?cb=20201116035206");
         images.put("Harbinger of Dawn","https://static.wikia.nocookie.net/gensin-impact/images/2/23/Weapon_Harbinger_of_Dawn.png/revision/latest/scale-to-width-down/256?cb=20201119233056");
         images.put("Cool Steel","https://static.wikia.nocookie.net/gensin-impact/images/9/9c/Weapon_Cool_Steel.png/revision/latest/scale-to-width-down/256?cb=20201119233444");
+
+        //Replace when actual character comes out
+        images.put("Yun Jin","https://genshin.honeyhunterworld.com/img/char/yunjin_gacha_splash.png");
+        images.put("Shenhe","https://genshin.honeyhunterworld.com/img/char/shenhe_gacha_splash.png");
     }
 
     static GuildMessageReceivedEvent event;
