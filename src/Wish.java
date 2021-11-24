@@ -36,7 +36,7 @@ public class Wish extends ListenerAdapter {
     static String[]fourStarCharacters = {
             "Amber","Lisa","Kaeya","Barbara","Razor","Bennett","Noelle","Fischl",
             "Sucrose","Beidou","Ningguang","Xiangling","Xingqiu","Chongyun",
-            "Diona","Xinyan","Rosaria","Yanfei","Kujou Sara"
+            "Diona","Xinyan","Rosaria","Yanfei","Kujou Sara","Yun Jin"
     };
     static String[]fourStarWeapons = {
             "The Flute","The Alley Flash","Sacrificial Sword","Lion's Roar","Favonius Sword",
@@ -76,9 +76,6 @@ public class Wish extends ListenerAdapter {
         images.put("Yanfei","https://static.wikia.nocookie.net/gensin-impact/images/f/f3/Character_Yanfei_Card.png/revision/latest/scale-to-width-down/281?cb=20210422100113");
         images.put("Kujou Sara","https://static.wikia.nocookie.net/gensin-impact/images/7/70/Character_Kujou_Sara_Card.jpg/revision/latest?cb=20210722100723");
         images.put("Thoma","https://static.wikia.nocookie.net/gensin-impact/images/2/29/Character_Thoma_Card.jpg/revision/latest/scale-to-width-down/1000?cb=20210830125722");
-
-        //Replace when actual character comes out
-        images.put("Yun Jin","https://genshin.honeyhunterworld.com/img/char/yunjin_gacha_splash.png");
 
         images.put("Jean","https://static.wikia.nocookie.net/gensin-impact/images/0/0e/Character_Jean_Card.jpg/revision/latest/scale-to-width-down/281?cb=20210706133041");
         images.put("Diluc","https://static.wikia.nocookie.net/gensin-impact/images/4/45/Character_Diluc_Card.jpg/revision/latest/scale-to-width-down/281?cb=20210529160947");
