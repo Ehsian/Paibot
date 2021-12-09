@@ -150,7 +150,7 @@ public class Wish extends ListenerAdapter {
         player = Tools.getPlayer(event.getAuthor());
         if(args.length>1){
             switch (args[1].toLowerCase()) {
-                case "standard" -> {
+                case "standard", "acquaint", "perma", "permanent" -> {
                     if(args.length>2&&args[2].equals("10")){
                         if(player.acquaintfate<10){
                             event.getChannel().sendMessage("You do not have enough Acquaint Fates! Purchase more at )shop.").queue();
@@ -193,7 +193,7 @@ public class Wish extends ListenerAdapter {
                         SaveData.saveData(player);
                     } catch (Exception ignored) {}
                 }
-                case "limited", "event" -> {
+                case "limited", "event", "intertwined" -> {
                     if(args.length>2&&args[2].equals("10")){
                         if(player.intertwinedfate<10){
                             event.getChannel().sendMessage("You do not have enough Intertwined Fates! Purchase more at )shop.").queue();
