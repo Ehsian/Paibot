@@ -35,6 +35,7 @@ public class Shop {
 
         switch(args[0].substring(Main.prefix.length()).toLowerCase()){
             case "shop","shop1" -> {
+                embed.setFooter("Currency: Primogems");
                 if(args.length>1){
                     if(args[1].equalsIgnoreCase("acquaint")){
                         try{
