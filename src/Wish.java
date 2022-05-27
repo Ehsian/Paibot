@@ -36,7 +36,7 @@ public class Wish extends ListenerAdapter {
     static String[]fourStarCharacters = {
             "Amber","Lisa","Kaeya","Barbara","Razor","Bennett","Noelle","Fischl",
             "Sucrose","Beidou","Ningguang","Xiangling","Xingqiu","Chongyun",
-            "Diona","Xinyan","Rosaria","Yanfei","Kujou Sara","Yun Jin"
+            "Diona","Xinyan","Rosaria","Yanfei","Kujou Sara","Yun Jin","Kuki Shinobu"
     };
     static String[]fourStarWeapons = {
             "The Flute","The Alley Flash","Sacrificial Sword","Lion's Roar","Favonius Sword",
@@ -51,8 +51,8 @@ public class Wish extends ListenerAdapter {
             "Skyward Pride","Skyward Blade","Amos' Bow","Lost Prayer to the Sacred Winds",
             "Primordial Jade Winged-Spear","Wolf's Gravestone","Aquila Favonia"};
 
-    static String rateUpFiveStar = "Shenhe";
-    static String[]rateUpFourStars = {"Yun Jin","Bennett","Xingqiu"};
+    static String rateUpFiveStar = "Yelan";
+    static String[]rateUpFourStars = {"Kuki Shinobu","Bennett","Xingqiu"};
 
     static HashMap<String,String>images = new HashMap<>();
     static{
@@ -136,6 +136,8 @@ public class Wish extends ListenerAdapter {
         //Replace when actual character comes out
         images.put("Yun Jin","https://genshin.honeyhunterworld.com/img/char/yunjin_gacha_splash.png");
         images.put("Shenhe","https://genshin.honeyhunterworld.com/img/char/shenhe_gacha_splash.png");
+        images.put("Yelan","https://genshin.honeyhunterworld.com/img/char/yelan_gacha_splash.png");
+        images.put("Kuki Shinobu","https://genshin.honeyhunterworld.com/img/char/shinobu_gacha_splash.png");
     }
 
     static GuildMessageReceivedEvent event;
@@ -281,10 +283,6 @@ public class Wish extends ListenerAdapter {
                             event.getChannel().sendMessage("Unknown Banner.\nAvailable banners - `standard`,`event`.").queue();
                         }
                         embed.setColor(0);
-                    }
-                    else{
-                        //To implement overall history
-                        embed.setTitle("In development");
                     }
                 }
                 default -> {
@@ -462,7 +460,6 @@ public class Wish extends ListenerAdapter {
         } else{
             player.inventory.put(itemname,1);
         }
-        player.history.add(0,new Pull(type,itemname));
         switch (banner) {
             case "standard" -> player.standardHistory.add(0,new Pull(type, itemname));
             case "event" -> player.limitedHistory.add(0,new Pull(type, itemname));

@@ -104,6 +104,9 @@ public class Quiz extends ListenerAdapter {
         }
     }
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+        if(Objects.isNull(question)){
+            return;
+        }
         Player player = Tools.getPlayer(event.getAuthor());
         if(answered.contains(player)){
             return;

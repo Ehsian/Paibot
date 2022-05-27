@@ -8,7 +8,8 @@ import java.util.*;
 public class Help extends ListenerAdapter{
     static String help1 = "`help` - You're already here!\n" +
             "`wish <banner>` - Simulates a Genshin Impact wish. Available banners: `standard`,`event`.\n" +
-            "`wish history <banner> <page>` - Displays the history of your wishes.";
+            "`history <banner> <page>` - Displays the history of your wishes." +
+            "`inventory` - Displays your inventory.";
     public static void main(String[] args, GuildMessageReceivedEvent event) {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("Help");
