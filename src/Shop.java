@@ -1,41 +1,39 @@
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Shop {
-    static LinkedHashMap<String,Integer> shop1 = new LinkedHashMap<>(); //Primogem Shop default
-    static LinkedHashMap<String,Integer> shop2 = new LinkedHashMap<>(); //Stardust Shop
-    static LinkedHashMap<String,Integer> shop3 = new LinkedHashMap<>(); //Starglitter Shop
+    static LinkedHashMap<String,Integer> shop = new LinkedHashMap<>();
+    static String[]items = {"Intertwined Fate","Acquaint Fate","Intertwined Fate","Acquaint Fate","Intertwined Fate","Acquaint Fate"};
     static{
-        shop1.put("Intertwined Fate",160);
-        shop1.put("Acquaint Fate",150);
-
-        shop2.put("Intertwined Fate",75);
-        shop2.put("Acquaint Fate",75);
-
-        shop3.put("Intertwined Fate",5);
-        shop3.put("Acquaint Fate",5);
+        shop.put("IFP",160); //Intertwined Fate Primogem
+        shop.put("IFSD",75); //Intertwined Fate Stardust
+        shop.put("IFSG",5); //Intertwined Fate Starglitter
+        shop.put("",0); //Spacer for the spaghetti
+        shop.put("AFP",150); //Acquaint Fate Primogem
+        shop.put("AFSD",70); //Acquaint Fate Stardust
+        shop.put("AFSG",4); //Acquaint Fate Starglitter
     }
 
     /*
     TODO:
-        -Usage parameters: )shop {item} {amount}
+        -Usage parameters: )buy / )shop {tag} {amount}
             E.g. )shop intertwined 20
         -Common item names:
             -intertwined,limited
             -acquaint,standard
 
     */
-    public static void main(GuildMessageReceivedEvent event,String[] args) {
+    public static void main(MessageReceivedEvent event, String[] args) {
         Player player = Tools.getPlayer(event.getAuthor());
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("Paimon's Bargains:");
 
         switch(args[0].substring(Main.prefix.length()).toLowerCase()){
             case "shop","shop1" -> {
-                embed.setFooter("Currency: Primogems");
+                embed.setFooter(")shop {Tag} {Amount}");
                 if(args.length>1){
                     if(args[1].equalsIgnoreCase("acquaint")){
                         try{
@@ -56,14 +54,15 @@ public class Shop {
                     }
                 }
                 else{
-                    embed.addField("Item",Tools.getMapAsString(shop1,true),true);
-                    embed.addField("Price",Tools.getMapAsString(shop1,false),true);
+                    embed.addField("Item","Intertwined Fate\n\n\n\nAcquaint Fate\n\n\n",true);
+                    embed.addField("Tag",Tools.getMapAsPage(shop,true),true);
+                    embed.addField("Price",Tools.getMapAsPage(shop,false),true);
                     embed.setDescription(")shop1 {item} {amount}");
                 }
             }
             case "shop2" -> event.getChannel().sendMessage("In development <[.]3").queue();
             case "shop3" -> event.getChannel().sendMessage("In development c[.]>").queue();
         }
-        event.getChannel().sendMessage(embed.build()).queue();
+        event.getChannel().sendMessageEmbeds(embed.build()).queue();
     }
 }

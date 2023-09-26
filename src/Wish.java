@@ -1,5 +1,5 @@
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.awt.*;
@@ -36,7 +36,7 @@ public class Wish extends ListenerAdapter {
     static String[]fourStarCharacters = {
             "Amber","Lisa","Kaeya","Barbara","Razor","Bennett","Noelle","Fischl",
             "Sucrose","Beidou","Ningguang","Xiangling","Xingqiu","Chongyun",
-            "Diona","Xinyan","Rosaria","Yanfei","Kujou Sara","Yun Jin"
+            "Diona","Xinyan","Rosaria","Yanfei","Kujou Sara","Gorou","Yun Jin"
     };
     static String[]fourStarWeapons = {
             "The Flute","The Alley Flash","Sacrificial Sword","Lion's Roar","Favonius Sword",
@@ -51,8 +51,8 @@ public class Wish extends ListenerAdapter {
             "Skyward Pride","Skyward Blade","Amos' Bow","Lost Prayer to the Sacred Winds",
             "Primordial Jade Winged-Spear","Wolf's Gravestone","Aquila Favonia"};
 
-    static String rateUpFiveStar = "Shenhe";
-    static String[]rateUpFourStars = {"Yun Jin","Bennett","Xingqiu"};
+    static String[] rateUpFiveStars = {"Neuvillette"};
+    static String[]rateUpFourStars = {"Beidou","Beidou","Beidou"};
 
     static HashMap<String,String>images = new HashMap<>();
     static{
@@ -65,7 +65,7 @@ public class Wish extends ListenerAdapter {
         images.put("Noelle","https://genshin.honeyhunterworld.com/img/char/noelle_gacha_splash.png");
         images.put("Fischl","https://genshin.honeyhunterworld.com/img/char/fischl_gacha_splash.png");
         images.put("Sucrose","https://genshin.honeyhunterworld.com/img/char/sucrose_gacha_splash.png");
-        images.put("Beidou","https://genshin.honeyhunterworld.com/img/char/beidou_gacha_splash.png");
+        images.put("Beidou","https://genshin.honeyhunterworld.com/img/beidou_024_gacha_splash.webp");
         images.put("Ningguang","https://genshin.honeyhunterworld.com/img/char/ningguang_gacha_splash.png");
         images.put("Xiangling","https://genshin.honeyhunterworld.com/img/char/xiangling_gacha_splash.png");
         images.put("Xingqiu","https://genshin.honeyhunterworld.com/img/char/xingqiu_gacha_splash.png");
@@ -76,6 +76,8 @@ public class Wish extends ListenerAdapter {
         images.put("Yanfei","https://genshin.honeyhunterworld.com/img/char/yanfei_gacha_splash.png");
         images.put("Kujou Sara","https://genshin.honeyhunterworld.com/img/char/sara_gacha_splash.png");
         images.put("Thoma","https://genshin.honeyhunterworld.com/img/char/thoma_gacha_splash.png");
+        images.put("Gorou","https://genshin.honeyhunterworld.com/img/char/gorou_gacha_splash.png");
+        images.put("Yun Jin","https://genshin.honeyhunterworld.com/img/char/yunjin_gacha_splash.png");
 
         images.put("Jean","https://genshin.honeyhunterworld.com/img/char/jean_gacha_splash.png");
         images.put("Diluc","https://genshin.honeyhunterworld.com/img/char/diluc_gacha_splash.png");
@@ -88,6 +90,8 @@ public class Wish extends ListenerAdapter {
         images.put("Hu Tao","https://genshin.honeyhunterworld.com/img/char/hutao_gacha_splash.png");
         images.put("Raiden Shogun","https://genshin.honeyhunterworld.com/img/char/shougun_gacha_splash.png");
         images.put("Sangonomiya Kokomi","https://genshin.honeyhunterworld.com/img/char/kokomi_gacha_splash.png");
+        images.put("Shenhe","https://genshin.honeyhunterworld.com/img/char/shenhe_gacha_splash.png");
+        images.put("Neuvillette","https://genshin.honeyhunterworld.com/img/neuvillette_087_gacha_splash.webp");
 
         images.put("Skyward Harp","https://static.wikia.nocookie.net/gensin-impact/images/1/19/Weapon_Skyward_Harp.png/revision/latest/scale-to-width-down/256?cb=20201116035246");
         images.put("Amos' Bow","https://static.wikia.nocookie.net/gensin-impact/images/d/de/Weapon_Amos%27_Bow.png/revision/latest/scale-to-width-down/256?cb=20201120010513");
@@ -132,19 +136,15 @@ public class Wish extends ListenerAdapter {
         images.put("Skyrider Sword","https://static.wikia.nocookie.net/gensin-impact/images/3/34/Weapon_Skyrider_Sword.png/revision/latest/scale-to-width-down/256?cb=20201116035206");
         images.put("Harbinger of Dawn","https://static.wikia.nocookie.net/gensin-impact/images/2/23/Weapon_Harbinger_of_Dawn.png/revision/latest/scale-to-width-down/256?cb=20201119233056");
         images.put("Cool Steel","https://static.wikia.nocookie.net/gensin-impact/images/9/9c/Weapon_Cool_Steel.png/revision/latest/scale-to-width-down/256?cb=20201119233444");
-
-        //Replace when actual character comes out
-        images.put("Yun Jin","https://genshin.honeyhunterworld.com/img/char/yunjin_gacha_splash.png");
-        images.put("Shenhe","https://genshin.honeyhunterworld.com/img/char/shenhe_gacha_splash.png");
     }
 
-    static GuildMessageReceivedEvent event;
+    static MessageReceivedEvent event;
     static EmbedBuilder embed;
     static Player player;
 
     //-----------------------------------------------------------------------------------------------
 
-    public static void main(GuildMessageReceivedEvent event, String[]args){
+    public static void main(MessageReceivedEvent event, String[]args){
         embed = new EmbedBuilder();
         Wish.event = event;
         player = Tools.getPlayer(event.getAuthor());
@@ -299,7 +299,7 @@ public class Wish extends ListenerAdapter {
             embed.setDescription("Use `"+Main.prefix+"Wish <Banner Name>` to Wish!");
             embed.addField("Available Banners:","Standard\nEvent",false);
         }
-        event.getChannel().sendMessage(embed.build()).queue();
+        event.getChannel().sendMessageEmbeds(embed.build()).queue();
     }
 
     public static String permanentBannerWish(){
@@ -400,15 +400,16 @@ public class Wish extends ListenerAdapter {
                 }
             }
             player.fiftyfifty = true;
-            if(player.inventory.containsKey(rateUpFiveStar)){
-                if(player.inventory.get(rateUpFiveStar)<=7){ //c0 - c6 (7 Total copies)
-                    player.starglitter+=10;
+            String item = rateUpFiveStars[rand.nextInt(rateUpFiveStars.length)];
+            if(player.inventory.containsKey(item)){
+                if(player.inventory.get(item)<=7){ //c0 - c6 (7 Total copies)
+                    player.starglitter+=2;
                 }
                 else{
-                    player.starglitter+=25;
+                    player.starglitter+=5;
                 }
             }
-            return rateUpFiveStar;
+            return item;
         }
         else if(rng<rate4star){
             player.limitedPity4Star = 0;

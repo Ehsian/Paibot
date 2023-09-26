@@ -1,6 +1,6 @@
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +35,7 @@ public class Quiz extends ListenerAdapter {
         //        new String[]{"","","",""},""));
     }
     static boolean answerable;
-    static TextChannel textChannel = Main.jda.getTextChannelById("889374039573946408");
+    static TextChannel textChannel = Main.jda.getTextChannelById("1156069424432947261");
     static Question question;
     static boolean first;
     static ArrayList<Player>answered = new ArrayList<>();
@@ -48,7 +48,7 @@ public class Quiz extends ListenerAdapter {
     };*/
     public static void run() {
         Runnable quiz = () -> {
-            final long interval = 45000; //Run every 20 seconds
+            final long interval = 60000; //Run every minute
             while(true){
                 if(Math.random()*10<2){
                     assert textChannel != null;
@@ -62,7 +62,7 @@ public class Quiz extends ListenerAdapter {
                         embed.setTitle("Quiz time!");
                         embed.setDescription("Answer this question correctly to gain 20 primogems!\n(First to get it correct gains 80 primogems!)");
                         embed.addField(question.question,question.choices[0]+"\n"+question.choices[1]+"\n"+question.choices[2]+"\n"+question.choices[3],true);
-                        textChannel.sendMessage(embed.build()).queue();
+                        textChannel.sendMessageEmbeds(embed.build()).queue();
                         List<String>asList = Arrays.asList(question.choices);
                         Collections.shuffle(asList);
                         asList.toArray(question.choices);
@@ -103,41 +103,43 @@ public class Quiz extends ListenerAdapter {
             this.answer = answer;
         }
     }
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-        Player player = Tools.getPlayer(event.getAuthor());
-        if(answered.contains(player)){
-            return;
-        }
-        if(event.getChannel().equals(textChannel)){
-            if(System.currentTimeMillis()-player.time<5000){
-                for(String choice:question.choices){
-                    if(event.getMessage().getContentRaw().equalsIgnoreCase(choice)){
-                        event.getChannel().sendMessage("You can not answer again for 5 seconds after answering incorrectly.").queue();
-                    }
-                }
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if(event.isFromGuild()){
+            Player player = Tools.getPlayer(event.getAuthor());
+            if(answered.contains(player)){
                 return;
             }
-            if(answerable){
-                if(event.getMessage().getContentRaw().equalsIgnoreCase(question.answer)){
-                    if(first){
-                        player.primogems+=80;
-                        event.getChannel().sendMessage(event.getAuthor().getName()+" has answered correctly first and was rewarded 80 primogems.").queue();
-                        first = false;
-                    } else{
-                        player.primogems+=20;
-                        event.getChannel().sendMessage(event.getAuthor().getName()+" has answered correctly and was rewarded 20 primogems.").queue();
-                    }
-                    answered.add(player);
-                    try {
-                        SaveData.saveData();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
+            if(event.getChannel().equals(textChannel)){
+                if(System.currentTimeMillis()-player.time<5000){
                     for(String choice:question.choices){
                         if(event.getMessage().getContentRaw().equalsIgnoreCase(choice)){
-                            player.time = System.currentTimeMillis();
+                            event.getChannel().sendMessage("You can not answer again for 5 seconds after answering incorrectly.").queue();
+                        }
+                    }
+                    return;
+                }
+                if(answerable){
+                    if(event.getMessage().getContentRaw().equalsIgnoreCase(question.answer)){
+                        if(first){
+                            player.primogems+=80;
+                            event.getChannel().sendMessage(event.getAuthor().getName()+" has answered correctly first and was rewarded 80 primogems.").queue();
+                            first = false;
+                        } else{
+                            player.primogems+=20;
+                            event.getChannel().sendMessage(event.getAuthor().getName()+" has answered correctly and was rewarded 20 primogems.").queue();
+                        }
+                        answered.add(player);
+                        try {
+                            SaveData.saveData();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        for(String choice:question.choices){
+                            if(event.getMessage().getContentRaw().equalsIgnoreCase(choice)){
+                                player.time = System.currentTimeMillis();
+                            }
                         }
                     }
                 }

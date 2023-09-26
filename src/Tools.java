@@ -1,5 +1,4 @@
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -11,14 +10,14 @@ public class Tools {
     public static LinkedHashMap<String,Integer> getItemMap(User user){
         Player player = getPlayer(user);
         LinkedHashMap<String,Integer>items = new LinkedHashMap<>();
-        items.put("Primogems",player.primogems);
-        items.put("Acquaint Fates",player.acquaintfate);
-        items.put("Intertwined Fates", player.intertwinedfate);
+        items.put("Primogem",player.primogems);
+        items.put("Acquaint Fate",player.acquaintfate);
+        items.put("Intertwined Fate", player.intertwinedfate);
         items.put("Stardust", player.stardust);
         items.put("Starglitter", player.starglitter);
         return items;
     }
-    public static String getMapAsString(LinkedHashMap map,boolean getKeys){
+    public static String getMapAsPage(LinkedHashMap map,boolean getKeys){
         StringBuilder page = new StringBuilder();
         if(getKeys){ //Get keys, not elements
             for(Object key:map.keySet()){
@@ -26,8 +25,27 @@ public class Tools {
             }
         }else{
             for(Object key:map.keySet()){
-                page.append(map.get(key)).append("\n");
+                if(map.get(key).equals(0)){
+                    page.append("\n");
+                    continue;
+                }
+                page.append(map.get(key));
+                if(key.toString().contains("P")){
+                    page.append(" Primogems");
+                } else if(key.toString().contains("SD")){
+                    page.append(" Stardust");
+                } else if(key.toString().contains("SG")){
+                    page.append(" Starglitter");
+                }
+                page.append("\n");
             }
+        }
+        return page.toString();
+    }
+    public static String getArrayAsPage(String[]array){
+        StringBuilder page = new StringBuilder();
+        for(String str:array){
+            page.append(str).append("\n");
         }
         return page.toString();
     }
