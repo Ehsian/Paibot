@@ -36,7 +36,11 @@ public class Wish extends ListenerAdapter {
     static String[]fourStarCharacters = {
             "Amber","Lisa","Kaeya","Barbara","Razor","Bennett","Noelle","Fischl",
             "Sucrose","Beidou","Ningguang","Xiangling","Xingqiu","Chongyun",
+<<<<<<< HEAD
             "Diona","Xinyan","Rosaria","Yanfei","Kujou Sara","Gorou","Yun Jin"
+=======
+            "Diona","Xinyan","Rosaria","Yanfei","Kujou Sara","Yun Jin","Kuki Shinobu"
+>>>>>>> 98a4ff603a5106183a9365fe7f68177b98743ed7
     };
     static String[]fourStarWeapons = {
             "The Flute","The Alley Flash","Sacrificial Sword","Lion's Roar","Favonius Sword",
@@ -51,8 +55,13 @@ public class Wish extends ListenerAdapter {
             "Skyward Pride","Skyward Blade","Amos' Bow","Lost Prayer to the Sacred Winds",
             "Primordial Jade Winged-Spear","Wolf's Gravestone","Aquila Favonia"};
 
+<<<<<<< HEAD
     static String[] rateUpFiveStars = {"Neuvillette"};
     static String[]rateUpFourStars = {"Beidou","Beidou","Beidou"};
+=======
+    static String rateUpFiveStar = "Yelan";
+    static String[]rateUpFourStars = {"Kuki Shinobu","Bennett","Xingqiu"};
+>>>>>>> 98a4ff603a5106183a9365fe7f68177b98743ed7
 
     static HashMap<String,String>images = new HashMap<>();
     static{
@@ -136,6 +145,15 @@ public class Wish extends ListenerAdapter {
         images.put("Skyrider Sword","https://static.wikia.nocookie.net/gensin-impact/images/3/34/Weapon_Skyrider_Sword.png/revision/latest/scale-to-width-down/256?cb=20201116035206");
         images.put("Harbinger of Dawn","https://static.wikia.nocookie.net/gensin-impact/images/2/23/Weapon_Harbinger_of_Dawn.png/revision/latest/scale-to-width-down/256?cb=20201119233056");
         images.put("Cool Steel","https://static.wikia.nocookie.net/gensin-impact/images/9/9c/Weapon_Cool_Steel.png/revision/latest/scale-to-width-down/256?cb=20201119233444");
+<<<<<<< HEAD
+=======
+
+        //Replace when actual character comes out
+        images.put("Yun Jin","https://genshin.honeyhunterworld.com/img/char/yunjin_gacha_splash.png");
+        images.put("Shenhe","https://genshin.honeyhunterworld.com/img/char/shenhe_gacha_splash.png");
+        images.put("Yelan","https://genshin.honeyhunterworld.com/img/char/yelan_gacha_splash.png");
+        images.put("Kuki Shinobu","https://genshin.honeyhunterworld.com/img/char/shinobu_gacha_splash.png");
+>>>>>>> 98a4ff603a5106183a9365fe7f68177b98743ed7
     }
 
     static MessageReceivedEvent event;
@@ -281,10 +299,6 @@ public class Wish extends ListenerAdapter {
                             event.getChannel().sendMessage("Unknown Banner.\nAvailable banners - `standard`,`event`.").queue();
                         }
                         embed.setColor(0);
-                    }
-                    else{
-                        //To implement overall history
-                        embed.setTitle("In development");
                     }
                 }
                 default -> {
@@ -463,7 +477,6 @@ public class Wish extends ListenerAdapter {
         } else{
             player.inventory.put(itemname,1);
         }
-        player.history.add(0,new Pull(type,itemname));
         switch (banner) {
             case "standard" -> player.standardHistory.add(0,new Pull(type, itemname));
             case "event" -> player.limitedHistory.add(0,new Pull(type, itemname));

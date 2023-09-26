@@ -38,17 +38,58 @@ public class Shop {
                     if(args[1].equalsIgnoreCase("acquaint")){
                         try{
                             if(args.length>2 && Integer.parseInt(args[2])>0){
-                                player.acquaintfate+=Integer.parseInt(args[2]);
-                                event.getChannel().sendMessage("Shhhhh...\nHere, have them for free.").queue();
+                                if(player.primogems<150*Integer.parseInt(args[2])){
+                                    event.getChannel().sendMessage("Hey! You can't afford that!").queue();
+                                }else{
+                                    player.primogems-=150*Integer.parseInt(args[2]);
+                                    player.acquaintfate+=Integer.parseInt(args[2]);
+                                    event.getChannel().sendMessage("Thanks for doing business with Paimon!").queue();
+                                    event.getChannel().sendMessage("(Successfully purchased "+Integer.parseInt(args[2])+" acquaint fates)").queue();
+                                }
                                 return;
                             }
                             else{
-                                player.acquaintfate+=1;
-                                event.getChannel().sendMessage("Shhhhh... \nHere, have it for free.").queue();
+                                if(player.primogems<150){
+                                    event.getChannel().sendMessage("Hey! You can't afford that!").queue();
+                                }else{
+                                    player.primogems-=150;
+                                    player.acquaintfate+=1;
+                                    event.getChannel().sendMessage("Thanks for doing business with Paimon!").queue();
+                                    event.getChannel().sendMessage("(Successfully purchased 1 acquaint fate)").queue();
+                                }
                                 return;
                             }
                         }catch(NumberFormatException e){
-                            event.getChannel().sendMessage("Please send a valid amount.").queue();
+                            event.getChannel().sendMessage("Paimon doesn't understand! Please ask for a valid amount!").queue();
+                            return;
+                        }
+                    }
+                    else if(args[1].equalsIgnoreCase("intertwined")){
+                        try{
+                            if(args.length>2 && Integer.parseInt(args[2])>0){
+                                if(player.primogems<160*Integer.parseInt(args[2])){
+                                    event.getChannel().sendMessage("Hey! You can't afford that!").queue();
+                                }else{
+                                    player.primogems-=160*Integer.parseInt(args[2]);
+                                    player.intertwinedfate+=Integer.parseInt(args[2]);
+                                    event.getChannel().sendMessage("Thanks for doing business with Paimon!").queue();
+                                    event.getChannel().sendMessage("(Successfully purchased "+Integer.parseInt(args[2])+" intertwined fates)").queue();
+                                }
+                                return;
+                            }
+                            else{
+                                if(player.primogems<160){
+                                    event.getChannel().sendMessage("Hey! You can't afford that!").queue();
+                                }else{
+                                    player.primogems-=160;
+                                    player.intertwinedfate+=1;
+                                    event.getChannel().sendMessage("Thanks for doing business with Paimon!").queue();
+                                    event.getChannel().sendMessage("(Successfully purchased 1 intertwined fate)").queue();
+                                }
+                                return;
+                            }
+                        }catch(NumberFormatException e){
+                            event.getChannel().sendMessage("Paimon doesn't understand! Please ask for a valid amount!").queue();
                             return;
                         }
                     }

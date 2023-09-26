@@ -103,10 +103,28 @@ public class Quiz extends ListenerAdapter {
             this.answer = answer;
         }
     }
+<<<<<<< HEAD
     public void onMessageReceived(MessageReceivedEvent event) {
         if(event.isFromGuild()){
             Player player = Tools.getPlayer(event.getAuthor());
             if(answered.contains(player)){
+=======
+    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+        if(Objects.isNull(question)){
+            return;
+        }
+        Player player = Tools.getPlayer(event.getAuthor());
+        if(answered.contains(player)){
+            return;
+        }
+        if(event.getChannel().equals(textChannel)){
+            if(System.currentTimeMillis()-player.time<5000){
+                for(String choice:question.choices){
+                    if(event.getMessage().getContentRaw().equalsIgnoreCase(choice)){
+                        event.getChannel().sendMessage("You can not answer again for 5 seconds after answering incorrectly.").queue();
+                    }
+                }
+>>>>>>> 98a4ff603a5106183a9365fe7f68177b98743ed7
                 return;
             }
             if(event.getChannel().equals(textChannel)){

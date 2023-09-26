@@ -1,6 +1,5 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.FileReader;
+import java.io.*;
+
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -98,6 +97,15 @@ public class Main extends ListenerAdapter {
                             e.printStackTrace();
                         }
                     }
+                }
+                case "worship","beg" -> {
+                    Player player = Tools.getPlayer(event.getAuthor());
+                    if(System.currentTimeMillis()-player.time<5000){
+                        event.getChannel().sendMessage("You may worship me every 5 seconds. Come back later.").queue();
+                        return;
+                    }
+                    player.time=System.currentTimeMillis();
+                    Worship.main(event,args);
                 }
             }
         }
